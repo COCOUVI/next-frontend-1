@@ -1,0 +1,6 @@
+*.json
+*.md
+.next/
+node_modules/
+**/*.config.js
+**/*.min.js

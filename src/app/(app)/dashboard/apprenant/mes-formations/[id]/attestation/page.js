@@ -1,13 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic"; // ⬅️ ajout
 import { useState } from "react";
+
+const PdfPreview = dynamic(() => import('@/components/PdfPreview'), {
+  ssr: false, // ⬅️ solution à l'erreur DOMMatrix
+});
 
 export default function AttestationPage() {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = () => {
     setLoading(true);
-    // Simuler une génération de PDF (à remplacer par un vrai appel backend)
     setTimeout(() => {
       setLoading(false);
       alert("L'attestation a été téléchargée !");
@@ -26,6 +30,9 @@ export default function AttestationPage() {
         Vous avez terminé la formation avec succès en obtenant au moins 80% au quiz.
         Vous pouvez maintenant télécharger votre attestation de fin de formation.
       </p>
+
+      {/* 👇 Aperçu PDF */}
+      <PdfPreview url="/attestations/attestation.pdf" />
 
       <button
         onClick={handleDownload}
